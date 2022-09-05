@@ -26,7 +26,7 @@ The pieces of literature summarized above produce interesting and varying result
 
 ## Methodology
 
-###### Data Acquisition
+#### Data Acquisition
 
 The data for this research was collected from a data repository on the website Kaggle. This data was uploaded and updated by user Pawan Trivedi in April 2022 under the name of Customer Churn (see References for link to dataset). This data originates from a machine learning competition on the website HackerEarth under the title HackerEarth’s Machine Learning challenge: How NOT to lose a customer in 10 days. It explains that the data set contains information regarding the demographics, membership details, duration and frequency of visits to the website, grievances, and feedback of an up-and-coming start-up (HackerEarth, 2021). This data set was taken from Kaggle instead of directly from HackerEarth as the data set from Kaggle provides a simplified variable of churn risk score in which the churn risk score is binary, rather than on a scale of 1 to 5. Overall, there were 56,911 data points provided. 
 
@@ -40,7 +40,7 @@ This set of data contains 24 distinct variables. Of these 24 variables, 21 will 
 
 
 
-Table 1: Summary table of the 21 variables and their descriptions extracted from the Customer Churn data set
+<sub> Table 1: Summary table of the 21 variables and their descriptions extracted from the Customer Churn data set </sub>
 Variable	Description
 Age	10 to 64
 Gender	Gender to which customer identifies 
@@ -63,23 +63,23 @@ Past complaint	If a customer has had any complaints
 Complaint status	How a complaint has been dealt with
 Feedback type	Reason for complaint
 
-	In preparation for the calculations, this data was cleaned. During cleaning it was discovered that a small amount of data was missing for some variables in this data set. The missing data was located in the variables of region category, joined through referral, medium of operation, points in wallet, and preferred offer types. The variable which contained the largest amount of missing data was joined through referral, which was missing 5438 data points which is 15% of the total data. Missing data points were defined as any data points which contained empty cells or were titled “NA”.  Ultimately, this missing data was dealt with by having any rows containing this criterion removed from the data set.  No standardization was applied to the data at this time as the majority of variables were categorical and standardization would only be applied if required by each unique machine learning technique.
+In preparation for the calculations, this data was cleaned. During cleaning it was discovered that a small amount of data was missing for some variables in this data set. The missing data was located in the variables of region category, joined through referral, medium of operation, points in wallet, and preferred offer types. The variable which contained the largest amount of missing data was joined through referral, which was missing 5438 data points which is 15% of the total data. Missing data points were defined as any data points which contained empty cells or were titled “NA”.  Ultimately, this missing data was dealt with by having any rows containing this criterion removed from the data set.  No standardization was applied to the data at this time as the majority of variables were categorical and standardization would only be applied if required by each unique machine learning technique.
 
 The calculations for this analysis were conducted using R programming language. Various built-in R packages were required and used to optimize results. Excel spreadsheets were required for reviewing the data set, performing calculations and to allow it to be converted into a CSV file.
 
-###### Data Preparation
+#### Data Preparation
 
 To prepare the data to be input into machine learning algorithms a further analysis was performed on the variables to determine their usability. The variables last visit time, average frequency login days, and average time spent (on website) were all removed from calculations due to their lack of context and practicality. The variable offer application preference was also removed due to its similarity to other variables. This resulted in 16 variables being used for the analysis.
 
-	All missing or incorrectly spelled data was filtered and removed from the dataset, as previously discussed. However, certain variables required further filtering. The variable days since last login contained a high number of observations numbered “-999”, this was potentially a database error accounting for a lack of information. Due to this having no meaning, all rows containing this number were removed. Additionally, approximately 25 observations contained “unknown” as a gender. Due to the small number of instances of “unknown” in this variable, these 25 rows were removed from the data set as well. After these adjustments, the data set contained 19,550 data points of 16 variables. Finally, due to computational power restraints, the data set was further paired down to 12,000 observances. This was completed by using the first 12,000 observances of the data set, which shared the same proportions (54% of people churned and 46% of people did not churn) of the target variable as did the larger data set. These 12,000 observances were split into training and testing groups for each machine learning model. For all models, the observances were split into 80% training and 20% testing. Numerically, that is 9600 observances and 2400 observances respectively. 
+All missing or incorrectly spelled data was filtered and removed from the dataset, as previously discussed. However, certain variables required further filtering. The variable days since last login contained a high number of observations numbered “-999”, this was potentially a database error accounting for a lack of information. Due to this having no meaning, all rows containing this number were removed. Additionally, approximately 25 observations contained “unknown” as a gender. Due to the small number of instances of “unknown” in this variable, these 25 rows were removed from the data set as well. After these adjustments, the data set contained 19,550 data points of 16 variables. Finally, due to computational power restraints, the data set was further paired down to 12,000 observances. This was completed by using the first 12,000 observances of the data set, which shared the same proportions (54% of people churned and 46% of people did not churn) of the target variable as did the larger data set. These 12,000 observances were split into training and testing groups for each machine learning model. For all models, the observances were split into 80% training and 20% testing. Numerically, that is 9600 observances and 2400 observances respectively. 
 
 The variable joining date was manipulated to allow for easier computation. Originally, this variable contained 1096 unique dates between the years 2015 to 2017. This was reduced to 12 levels, grouping each date quarterly by year, for example, all dates between April 1st and June 30th 2016 were reduced to the quarter, April to June 2016. 
 
 In order to run a support vector machines algorithm, encoding of the categorical variables was necessary due to the requirement that all variables be in a numeric class in order to be able to have calculations performed on them when using this algorithm. To ensure that the categorical variables did not lose their meaning when undergoing this conversion, it was necessary for them to be put in a meaningful order. 3 of these variables were simple “yes” or “no” response variables and thus no order was required, “no” was converted to 1 and “yes” was converted to 2. The variables which underwent this manipulation were joined through referral, past complaint, and used special discount. The gender category followed a similar conversion in which “F” was converted to 1 and “M” was converted to 2. The variable region category was ordered from smallest population size to largest, meaning “village” was converted to 1, “town” to 2, and “city” to 3. Similarly, the variable preferred offer types was converted numerically to reflect smallest monetary value to largest monetary value, “without offers” to 1, “Gift Vouchers/Coupons” to 2, and “Credit/Debit Card Offers” to 3. Medium of operation was converted based on useability, with “smartphone” being converted to 1, “desktop” being converted to 2, and “both” being converted to 3. The variable membership category was ordered from the cheapest membership to the most expensive membership. That being, “no membership” as 1, “basic membership” as 2, “premium membership” as 3, “silver membership” as 4, “gold membership” as 5, and “platinum membership” as 6. The feedback variable was measured by seriousness of complaint starting with “no reason specified” as 1 and then progressing from negative feedback to positive feedback. The numeric values of the rest of the variables are as follows with “poor product quality” as 2, “poor customer service” as 3, “poor website” as 4, “too many ads” as 5, “user friendly website” as 6, “products always in stock” as 7, “quality customer care” as 8, and “reasonable price” as 9. The final category affected by encoding was joining date and this category was encoded from oldest quarter to newest quarter, with “Jan to Mar 2015” as 1 and the final quarter “Oct to Dec 2017” as 12. These variables along with the remaining 4 variables already in numeric format were then combined and normalized using min-max scaling. The target variable, churn risk score was not included in this normalization. The variables were then prepared to conduct SVM analysis.
 
-	Finally, a correlation analysis was run on the 15 variables. The variables feedback, average transaction value, points in wallet, and membership category all had mild negative correlations with the target variable of customer churn. Most variables had no significant correlation between each other. Feedback and average transaction value had a positive correlation of 0.22 while points in wallet and membership category had a positive correlation of 0.18. The remainder of the variables had weaker correlations within themselves and with the target variable. All variables were moved forward for calculations as the majority of machine learning models being used in this study are non-linear and therefore a weak correlation does not imply a poor effect. Logistic regression analysis which is linear in nature will still be run for comparison. More specific feature selection was conducted in some machine learning algorithms to create further improved models.
+Finally, a correlation analysis was run on the 15 variables. The variables feedback, average transaction value, points in wallet, and membership category all had mild negative correlations with the target variable of customer churn. Most variables had no significant correlation between each other. Feedback and average transaction value had a positive correlation of 0.22 while points in wallet and membership category had a positive correlation of 0.18. The remainder of the variables had weaker correlations within themselves and with the target variable. All variables were moved forward for calculations as the majority of machine learning models being used in this study are non-linear and therefore a weak correlation does not imply a poor effect. Logistic regression analysis which is linear in nature will still be run for comparison. More specific feature selection was conducted in some machine learning algorithms to create further improved models.
 
-###### Model Selection
+#### Model Selection
 
 As justified by the literature, the following supervised machine learning techniques were selected to model customer churn. These techniques were applied due to their ability to work efficiently with discrete and binary data. 
 
@@ -101,11 +101,11 @@ F1 Score = 2×((Precision×Recall)/(Precision+Recall))
 
 Other metrics will also be considered .Two of these metrics are Receiver Operating Characteristic (ROC) and Area Under the Curve (AUC). The ROC curve serves the purpose of summarizing all of the confusion matrices which were produced and aims to reach the false positive rate as fast as possible (Zheng, 2015). The AUC curve builds upon the ROC curve as it allows for ROC’s to be compared to one another, the larger the AUC curve the stronger the model (Zheng, 2015). Additionally, the metric akaike information criterion (AIC) will be applied to logistic regression models for evaluation. This metric does not provide useful information for any other model, as it was only used for logistic regression, to explore which model is the best fit (Dean, 2014). 
 
-	Following metric calculations, the various models will be compared against one another to find the strongest model. The various different metrics are used to allow for a wide understanding of each model. The comparison between these models will ultimately result in one strongest model which will be applied to understand this company’s customer churn.
+Following metric calculations, the various models will be compared against one another to find the strongest model. The various different metrics are used to allow for a wide understanding of each model. The comparison between these models will ultimately result in one strongest model which will be applied to understand this company’s customer churn.
 
 ## Results
 
-###### Logistic Regression
+#### Logistic Regression
 
 The first of the machine learning algorithms to be executed were the logistic regression models, of which three models were produced, see Box 1 below for the basic R command for these models. Logistic regression model 1 produced a high accuracy score of 83.67% and a high AUC score of 0.9599. The sensitivity score and f1 score of 0.6765 and 0.7614, respectively, performed moderately. The AIC score for this model was 4744.8. These metrics were calculated using the confusion matrix as seen in Box 2.
 
@@ -113,13 +113,14 @@ Following the completion of this model, an odds ratio analysis was run to determ
 
 To explore if any of these variables were the sole connection, each of these variables were executed in their own models. The models using the variables joining date and feedback resulted in very high AIC scores and low scores in the other metrics. They were thus not included in Table 2 and were not given a further analysis as this would not be an improvement. The final model, logistic regression model 3 was calculated using the variable membership category.  This model did obtain a much lower AIC score than the other sole variable models, however, it’s AIC score did not improve upon logistic regression model 1 or logistic regression model 2. In addition, logistic regression model 3 performed less well in all other metrics, obtaining the lowest AUC score, f1 score, sensitivity score, and accuracy score of all models. A summarization of all metrics from each model can be seen below in Table 2. Additionally, see Figure 1 for a comparison of ROC curves from each model.
 
-Box 1: Logistic regression model 1 R command
-
+<sub> Box 1: Logistic regression model 1 R command </sub>
+```
 mylogit1 = glm(churn_risk_score ~ ., data = churn4_tr, family = "binomial")
+```
 
 
-
-Box 2: Logistic regression model 1 confusion matrix
+<sub> Box 2: Logistic regression model 1 confusion matrix </sub>
+```
 > confusionMatrix(table(churn_pred1, churnrisk_test))
 Confusion Matrix and Statistics
 
@@ -127,6 +128,7 @@ Confusion Matrix and Statistics
 churn_pred1    0    1
           0  757   30
           1  362 1251
+```
 
 Table 2: Logistic regression metrics
 Model	AIC	Accuracy	Sensitivity	F1 Score	AUC
@@ -135,9 +137,11 @@ Logistic Regression Model 2	4858	0.8358	0.6479	0.7648	0.9480
 Logistic Regression Model 3	5475.8	0.7783   	0.5246	0.7066	0.9305
 
  
-Figure 1: Logistic regression ROC curves
+<sub> Figure 1: Logistic regression ROC curves </sub>
+<img width="332" alt="image" src="https://user-images.githubusercontent.com/77642758/188470963-650baa52-e18f-4eea-aad1-6348332593f6.png">
 
-###### Decision Tree
+
+#### Decision Tree
 
 The decision tree algorithm was the next machine learning model to be applied to the customer churn prediction data. It was first necessary to explore the attribute usage metrics executed by each model. In the first two models, decision tree model 1 and decision tree model 2, it was found that membership category was the most used attribute at 100%, followed by points in wallet at 58.17% and feedback at 19.91%. All other attributes had attribute usage below 10% for the first two models. The third model had the three previously mentioned attributes all at 100% attribute usage, followed by 8 of 12 remaining variables having attribute usage between 15% and 75%, allowing for a much more diverse spread. The final model, decision tree model 4, had all attribute usage above 59%.
 
@@ -149,10 +153,12 @@ Continuing, in an attempt to improve upon the previous model, a pruned tree was 
 
 A final decision tree trial was executed in which decision tree model 4 used a boosted model of 100 iterations and produced a tree size of 46, the R command executed for this model can be see below in Box 3. This resulted in slightly better scores across all measures compared to the first decision tree model, see Box 4 for the confusion matrix and various summary statistics. Decision tree model 4 resulted in the highest accuracy score of 0.9421, the highest sensitivity score of 0.9225, and the highest F1 score of 0.8990. However, it produced a slightly lower AUC score of 0.9774 when compared to the first and third decision tree models which produced an AUC score of 0.9782.
 
-Box 3: Decision tree model 4 R command
+<sub> Box 3: Decision tree model 4 R command </sub>
+```
 churn_dt_boost100 <- C5.0(churn_dt_train[-16], churn_dt_train$churn_risk_score, control = C5.0Control(minCases = 9), trials = 100)
+```
 
-Table 3: Decision tree metrics
+<sub> Table 3: Decision tree metrics </sub>
 Model	Accuracy	Sensitivity	F1 Score	AUC
 Decision Tree Model 1	0.9408	0.9207   	0.8970	0.9782
 Decision Tree Model 2	0.9388	0.9018	0.8949	0.9786
@@ -160,7 +166,9 @@ Decision Tree Model 3	0.9396	0.9198	0.8949	0.9782
 Decision Tree Model 4	0.9421	0.9225	0.8990	0.9774
 
  
-Figure 2: Decision tree ROC curves
+<sub> Figure 2: Decision tree ROC curves </sub>
+
+<img width="468" alt="image" src="https://user-images.githubusercontent.com/77642758/188470746-0812eadc-0182-4e2a-aefe-26e6360326a9.png">
 
 
 
@@ -170,19 +178,8 @@ Figure 2: Decision tree ROC curves
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-Box 4: Decision tree model 4 confusion matrix
+<sub> Box 4: Decision tree model 4 confusion matrix </sub>
+```
 > confusionMatrix(table(churn_dt_boost_pred100, churn_dt_test$churn_risk_score))
 Confusion Matrix and Statistics
                       
@@ -209,20 +206,23 @@ churn_dt_boost_pred100    0    1
       Balanced Accuracy : 0.9407               
                                                
        'Positive' Class : 0   
+```
 
-###### AdaBoost
+#### AdaBoost
 
 The next machine learning algorithm to be executed was an adaboost algorithm which was run using the package “adabag” in RStudio. It utilized the default parameter of 100 iterations.  Based on the confusion matrix (see Box 6), this algorithm resulted in an accuracy score of 0.9407, a sensitivity score of 0.9619, and an F1 score of 0.8967. An AUC score was not able to be calculated for this algorithm. See Box 5 for the R command used to run this model.
 
-Box 5: AdaBoost model 1 R command
-
+<sub> Box 5: AdaBoost model 1 R command </sub>
+```
 bst <- boosting.cv(churn_risk_score ~ ., data = churn_rf_rand, mfinal = 50)
+```
 
-
-Table 4: AdaBoost metrics
+<sub> Table 4: AdaBoost metrics </sub>
 Model	Accuracy	Sensitivity	F1 Score	AUC	Error
 AdaBoost Model 1	0.9407	0.9619	0.8967	N/A	0.0593
-Box 6: AdaBoost model 1 confusion matrix and error
+
+<sub> Box 6: AdaBoost model 1 confusion matrix and error </sub>
+```
 > bst$confusion
                Observed Class
 Predicted Class    0    1
@@ -230,8 +230,9 @@ Predicted Class    0    1
               1  467 6179
 > bst$error
 [1] 0.05933333
+```
 
-###### Random Forests
+#### Random Forests
 
 The fourth machine learning algorithm to be applied in an attempt to predict customer churn was random forest. One of the command lines written to execute this algorithm can be seen below in Box 7. The first model, random forest model 1, resulted in a high accuracy score of 0.9396, a high sensitivity score of 0.9180, a high F1 score of 0.8950, and finally a high AUC score of 0.9763.
 
@@ -255,13 +256,13 @@ rf2 <- train(churn_risk_score ~ ., data = churn_rf_trn, method = "rf",
 
 
 
-Table 5: Random forest metrics
+<sub> Table 5: Random forest metrics </sub>
 Model	Accuracy	Sensitivity	F1 Score	AUC
 Random Forest Model 1	0.9396  	0.9180	0.8950	0.9763
 Random Forest Model 2	0.9421	0.9252	0.8988	0.9770
 Random Forest Model 3	0.8275   	0.6270	0.7570	0.9766
 
-<sub>Box 8: Random forest model 2 confusion matrix</sub>
+<sub> Box 8: Random forest model 2 confusion matrix </sub>
 ```
 Confusion Matrix and Statistics
 
@@ -291,11 +292,14 @@ p2     0    1
        'Positive' Class : 0                   
 ```
  
-Figure 3: Random forest ROC curves
- 
-Figure 4: Random forest model 1 variable importance plot
+<sub> Figure 3: Random forest ROC curves </sub>
+ <img width="375" alt="image" src="https://user-images.githubusercontent.com/77642758/188470673-00e7fb29-a5e1-40ff-b901-5f1141ae6c8b.png">
 
-###### Support Vector Machines
+<sub> Figure 4: Random forest model 1 variable importance plot </sub>
+<img width="362" alt="image" src="https://user-images.githubusercontent.com/77642758/188470654-f0d7f13b-61e2-41f2-a816-0c929bc48404.png">
+
+
+#### Support Vector Machines
 
 Support Vector Machines (SVM) was the final machine learning algorithm to be applied to the data set for analysis. An example of the R command used to execute this code can be seen below in Box 9, which displays the code used for SVM model 2.
 
@@ -310,15 +314,16 @@ A final third SVM model was conducted using the linear kernel method. This model
 svm1 <- ksvm(churn_risk_score ~ ., data = churn4.tr, kernel = "rbfdot", type = "C-svc")
 ```
 
-Table 6: SVM metrics
+<sub> Table 6: SVM metrics </sub>
 Model	Accuracy	Sensitivity	F1 Score	AUC
 SVM Model 1	79.7	0.7605	0.6669	0.8952
 SVM Model 2	81.9	0.7674	0.6952	0.9127
 SVM Model 3	79.7	0.7605	0.6669	0.7987
 
  
-Figure 5: Support vector machines ROC curves
+<sub> Figure 5: Support vector machines ROC curves </sub>
 
+<img width="369" alt="image" src="https://user-images.githubusercontent.com/77642758/188470548-acedfe6d-e980-41b3-9cc7-34c4ab4e061e.png">
 
 
 
@@ -375,7 +380,7 @@ The decision tree models and random forests are extremely similar, with their ac
 
 Ultimately, one must be cautious as this study was limited by many factors. The company did not provide a lot of excess information other than the data set, thus it is possible that some of the variables should have been treated differently or had a different meaning. Additionally, information could have been lost in the encoding stage of this study as the relationship between the ordered variables may have been misrepresented. Finally, due to computational demands, the data set had to be paired down, this could have resulted in a loss of information or a sampling bias. Future work can investigate the use of multiple methods added together as this may reduce possibility of bias and make up for the data lost during data preparation.
 
-Table 7: Metric comparison between algorithms
+<sub> Table 7: Metric comparison between algorithms </sub>
 Model	Accuracy	Sensitivity	F1 Score	AUC
 Logistic Regression Model 1	0.8367	0.6765	0.7614	0.9599
 Decision Tree Model 4	0.9421	0.9225	0.8990	0.9774
@@ -385,7 +390,7 @@ SVM Model 2	81.9	0.7674	0.6952	0.9127
 
 ## Conclusion 
 
-	This study ventured to perform an in-depth analysis of the customer churn rates in a small start-up company. Customer churn has become a buzzword in the business sector and everyone wants to utilize this information to its greatest potential. This wouldn’t be possible without specialized machine learning algorithms. The literature on customer churn prediction does not paint a picture of just a singular algorithm that is the key to this type of analysis. Instead, there are many algorithms and combinations of algorithms that can be executed in order to obtain the best results. Due to this, it is necessary to try a wide range of algorithms to see which works best for the data in question. This study strived to achieve this by applying 5 different machine learning algorithms, those being logistic regression, decision trees, random forest, adaboost, and support vector machines. These classification algorithms were all attempting to answer two questions. First, is this algorithm capable of predicting customer churn? Second, if it is, then is it capable of telling us what specific variables lead to churn or what specific combination of variables lead to churn? All of the algorithms were able to produce answers to these questions and the majority of them did so with very high accuracy. The random forest and decision tree models performed the strongest, with both models achieving 94% accuracy as well as high scores in all other important metrics. Ultimately, it was determined that the decision tree algorithm created the strongest model, based on many factors. Additionally, most models found that the membership category a customer subscribes to tends to be a very important variable to look out for when trying stop churn. This is reliable information for any business and the start-up whose information was used in this study will be able to use this data to target their customers who are exhibiting churning prone behaviours and hopefully stop them from leaving before it is too late. 
+This study ventured to perform an in-depth analysis of the customer churn rates in a small start-up company. Customer churn has become a buzzword in the business sector and everyone wants to utilize this information to its greatest potential. This wouldn’t be possible without specialized machine learning algorithms. The literature on customer churn prediction does not paint a picture of just a singular algorithm that is the key to this type of analysis. Instead, there are many algorithms and combinations of algorithms that can be executed in order to obtain the best results. Due to this, it is necessary to try a wide range of algorithms to see which works best for the data in question. This study strived to achieve this by applying 5 different machine learning algorithms, those being logistic regression, decision trees, random forest, adaboost, and support vector machines. These classification algorithms were all attempting to answer two questions. First, is this algorithm capable of predicting customer churn? Second, if it is, then is it capable of telling us what specific variables lead to churn or what specific combination of variables lead to churn? All of the algorithms were able to produce answers to these questions and the majority of them did so with very high accuracy. The random forest and decision tree models performed the strongest, with both models achieving 94% accuracy as well as high scores in all other important metrics. Ultimately, it was determined that the decision tree algorithm created the strongest model, based on many factors. Additionally, most models found that the membership category a customer subscribes to tends to be a very important variable to look out for when trying stop churn. This is reliable information for any business and the start-up whose information was used in this study will be able to use this data to target their customers who are exhibiting churning prone behaviours and hopefully stop them from leaving before it is too late. 
 
 
 
