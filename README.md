@@ -1,4 +1,6 @@
-# Masters-Dissertation
+# Predicting Customer Churn In The Start-Up Industry Using Multiple Machine Learning Algorithms
+
+Below is the dissertation I completed for my Masters studies.
 
 ## Abstract
 
