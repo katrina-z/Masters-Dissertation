@@ -41,27 +41,29 @@ This set of data contains 24 distinct variables. Of these 24 variables, 21 will 
 
 
 <sub> Table 1: Summary table of the 21 variables and their descriptions extracted from the Customer Churn data set </sub>
-Variable	Description
-Age	10 to 64
-Gender	Gender to which customer identifies 
-Region category	Region to which customer belongs (city, town, or village)
-Membership category	Type of membership customer is subscribed to
-Joining date	Date customer joined website
-Joined through referral	If the customer joined by referral
-Preferred offer types	Customer’s preferred way to receive offers
-Medium of operation	Type of device used to operate website
-Internet connection	Type of internet connection used to operate website
-Last visit time	The last time the customer visited the website
-Days since last login	Number of days since last login to website
-Average time spent	Average time spent on website
-Average transaction value	Average amount spent on a transaction
-Average frequency login	Average number of days a customer has logged into website
-Points in wallet	Number of points the customer has received from each transaction
-Special discount used	If a customer has used a special discount
-Offer application preference	If a customer prefers to use offers
-Past complaint	If a customer has had any complaints
-Complaint status	How a complaint has been dealt with
-Feedback type	Reason for complaint
+
+| Variable |	Description |
+| -------  | -------- |
+| Age |	10 to 64 |
+| Gender |	Gender to which customer identifies  |
+| Region category |	Region to which customer belongs (city, town, or village) |
+| Membership category |	Type of membership customer is subscribed to |
+| Joining date |	Date customer joined website |
+| Joined through referral |	If the customer joined by referral |
+| Preferred offer types |	Customer’s preferred way to receive offers |
+| Medium of operation |	Type of device used to operate website |
+| Internet connection |	Type of internet connection used to operate website |
+| Last visit time |	The last time the customer visited the website |
+| Days since last login |	Number of days since last login to website |
+| Average time spent |	Average time spent on website |
+| Average transaction value |	Average amount spent on a transaction |
+| Average frequency login |	Average number of days a customer has logged into website |
+| Points in wallet |	Number of points the customer has received from each transaction |
+| Special discount used |	If a customer has used a special discount |
+| Offer application preference |	If a customer prefers to use offers |
+| Past complaint |	If a customer has had any complaints |
+| Complaint status |	How a complaint has been dealt with |
+| Feedback type |	Reason for complaint |
 
 In preparation for the calculations, this data was cleaned. During cleaning it was discovered that a small amount of data was missing for some variables in this data set. The missing data was located in the variables of region category, joined through referral, medium of operation, points in wallet, and preferred offer types. The variable which contained the largest amount of missing data was joined through referral, which was missing 5438 data points which is 15% of the total data. Missing data points were defined as any data points which contained empty cells or were titled “NA”.  Ultimately, this missing data was dealt with by having any rows containing this criterion removed from the data set.  No standardization was applied to the data at this time as the majority of variables were categorical and standardization would only be applied if required by each unique machine learning technique.
 
@@ -87,7 +89,7 @@ Logistic regression was used due to its simplicity and interpretability. Calcula
 
 A k-means clustering analysis was performed on the data based on the literature indicating that this leads to a boosted model (Ullah et al., 2019; Machado and Karray, 2022; Xiahou and Harada, 2022). This algorithm requires all variables to be numeric in class and was therefore able to be completed due to the encoding of the categorical variables for their use in SVM algorithms. Despite this, k-means clustering is an unsupervised machine learning technique and therefore was not effective on this particular data set. It was thus abandoned and no further analysis was able to be completed with it, thus it is not included in the results section.
 
-###### Metric Selection
+#### Metric Selection
 
 The machine learning models will be evaluated using numerous metrics to ensure robustness and accuracy. First, confusion matrices will be applied to each model. The confusion matrix generates the metrics giving true positives, false positives, true negatives, and false negatives. This allows for calculations of precision, accuracy, recall, and F1 score. This study is most interested in the metrics of accuracy, detecting a high number of correct predictions, and F1 score, which takes into consideration both precision and recall (Novakovic et al., 2017). F1 score maximizes both of these metrics to create a more thorough picture of the prediction (Novakovic et al., 2017). Therefore, further to this, this study will also focus on the metric of sensitivity rather than specificity. This is because in this case, it is more important to be able to correctly identify when the condition is present (customer did churn). This is preferable to the alternative that the model focuses more on being able to detect when a customer won’t churn, as a company is better off targeting customers who are going to stay already rather than not targeting some customers who are planning to leave. These metrics are in line with the literature previously discussed, of which the majority use these metrics to ensure the best model. The formulas for each of these metrics are as seen below (Ullah et al., 2019).
 
@@ -130,11 +132,12 @@ churn_pred1    0    1
           1  362 1251
 ```
 
-Table 2: Logistic regression metrics
-Model	AIC	Accuracy	Sensitivity	F1 Score	AUC
-Logistic Regression Model 1	4744.8	0.8367	0.6765	0.7614	0.9599
-Logistic Regression Model 2	4858	0.8358	0.6479	0.7648	0.9480
-Logistic Regression Model 3	5475.8	0.7783   	0.5246	0.7066	0.9305
+<sub> Table 2: Logistic regression metrics </sub>
+| Model  |	AIC  |	Accuracy |	Sensitivity |	F1 Score |	AUC |
+| ---- | ----  | ---- | --- | ---- |--- |
+| Logistic Regression Model 1 |	4744.8 |	0.8367 |	0.6765 |	0.7614 |	0.9599 |
+| Logistic Regression Model 2 |	4858 |	0.8358 |	0.6479 |	0.7648 |	0.9480 |
+| Logistic Regression Model 3 |	5475.8 |	0.7783 |   	0.5246 |	0.7066 |	0.9305 |
 
  
 <sub> Figure 1: Logistic regression ROC curves </sub>
@@ -159,11 +162,12 @@ churn_dt_boost100 <- C5.0(churn_dt_train[-16], churn_dt_train$churn_risk_score, 
 ```
 
 <sub> Table 3: Decision tree metrics </sub>
-Model	Accuracy	Sensitivity	F1 Score	AUC
-Decision Tree Model 1	0.9408	0.9207   	0.8970	0.9782
-Decision Tree Model 2	0.9388	0.9018	0.8949	0.9786
-Decision Tree Model 3	0.9396	0.9198	0.8949	0.9782
-Decision Tree Model 4	0.9421	0.9225	0.8990	0.9774
+ | Model |	Accuracy |	Sensitivity |	F1 Score |	AUC |
+ | ---- | ----- | ----- | ---- | ----- |
+|Decision Tree Model 1 |	0.9408 |	0.9207 |   	0.8970 |	0.9782 |
+|Decision Tree Model 2 |	0.9388 |	0.9018 |	0.8949 |	0.9786 |
+|Decision Tree Model 3 |	0.9396 |	0.9198 |	0.8949 |	0.9782 |
+|Decision Tree Model 4 |	0.9421 |	0.9225 |	0.8990 |	0.9774 |
 
  
 <sub> Figure 2: Decision tree ROC curves </sub>
@@ -218,8 +222,9 @@ bst <- boosting.cv(churn_risk_score ~ ., data = churn_rf_rand, mfinal = 50)
 ```
 
 <sub> Table 4: AdaBoost metrics </sub>
-Model	Accuracy	Sensitivity	F1 Score	AUC	Error
-AdaBoost Model 1	0.9407	0.9619	0.8967	N/A	0.0593
+| Model  |	Accuracy |	Sensitivity |	F1 Score |	AUC |	Error |
+| ---- | ---- | ---- | ---- | --- | ---- |
+| AdaBoost Model 1 |	0.9407 |	0.9619 |	0.8967 |	N/A |	0.0593 |
 
 <sub> Box 6: AdaBoost model 1 confusion matrix and error </sub>
 ```
@@ -257,10 +262,11 @@ rf2 <- train(churn_risk_score ~ ., data = churn_rf_trn, method = "rf",
 
 
 <sub> Table 5: Random forest metrics </sub>
-Model	Accuracy	Sensitivity	F1 Score	AUC
-Random Forest Model 1	0.9396  	0.9180	0.8950	0.9763
-Random Forest Model 2	0.9421	0.9252	0.8988	0.9770
-Random Forest Model 3	0.8275   	0.6270	0.7570	0.9766
+| Model  |	Accuracy |	Sensitivity |	F1 Score |	AUC |
+| ------  | -----  | ------ | ----- | ----- |
+| Random Forest Model 1 |	0.9396  | 	0.9180 |	0.8950 |	0.9763 |
+| Random Forest Model 2 |	0.9421 |	0.9252 |	0.8988 |	0.9770 |
+| Random Forest Model 3 |	0.8275  |  	0.6270 |	0.7570 |	0.9766 |
 
 <sub> Box 8: Random forest model 2 confusion matrix </sub>
 ```
@@ -315,10 +321,11 @@ svm1 <- ksvm(churn_risk_score ~ ., data = churn4.tr, kernel = "rbfdot", type = "
 ```
 
 <sub> Table 6: SVM metrics </sub>
-Model	Accuracy	Sensitivity	F1 Score	AUC
-SVM Model 1	79.7	0.7605	0.6669	0.8952
-SVM Model 2	81.9	0.7674	0.6952	0.9127
-SVM Model 3	79.7	0.7605	0.6669	0.7987
+| Model |	Accuracy |	Sensitivity |	F1 Score |	AUC |
+| ----- | -----  | ---- | ----- | ---- |
+| SVM Model 1 |	79.7 |	0.7605 |	0.6669 |	0.8952 |
+| SVM Model 2 |	81.9 |	0.7674 |	0.6952 |	0.9127 |
+| SVM Model 3 |	79.7 |	0.7605 |	0.6669 |	0.7987 |
 
  
 <sub> Figure 5: Support vector machines ROC curves </sub>
@@ -357,7 +364,7 @@ Training error : 0.164479
             
 churn4.pred1   0   1
            0 976 300
-	           134 990
+	     134 990
 ```
 
 ## Discussion
@@ -381,12 +388,13 @@ The decision tree models and random forests are extremely similar, with their ac
 Ultimately, one must be cautious as this study was limited by many factors. The company did not provide a lot of excess information other than the data set, thus it is possible that some of the variables should have been treated differently or had a different meaning. Additionally, information could have been lost in the encoding stage of this study as the relationship between the ordered variables may have been misrepresented. Finally, due to computational demands, the data set had to be paired down, this could have resulted in a loss of information or a sampling bias. Future work can investigate the use of multiple methods added together as this may reduce possibility of bias and make up for the data lost during data preparation.
 
 <sub> Table 7: Metric comparison between algorithms </sub>
-Model	Accuracy	Sensitivity	F1 Score	AUC
-Logistic Regression Model 1	0.8367	0.6765	0.7614	0.9599
-Decision Tree Model 4	0.9421	0.9225	0.8990	0.9774
-Adaboost Model 1	0.9407	0.9619	0.8967	N/A
-Random Forest Model 2	0.9421	0.9252	0.8988	0.9770
-SVM Model 2	81.9	0.7674	0.6952	0.9127
+| Model |	Accuracy |	Sensitivity |	F1 Score |	AUC |
+| ----- | -----  | ---- | ----- | ----- |
+| Logistic Regression Model 1 |	0.8367 |	0.6765 |	0.7614 |	0.9599 |
+| Decision Tree Model 4 |	0.9421 |	0.9225 |	0.8990 |	0.9774 | 
+| Adaboost Model 1 |	0.9407 |	0.9619 |	0.8967 |	N/A |
+| Random Forest Model 2 |	0.9421 |	0.9252 |	0.8988 |	0.9770 |
+| SVM Model 2 |	81.9 |	0.7674 |	0.6952 |	0.9127 |
 
 ## Conclusion 
 
