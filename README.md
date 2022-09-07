@@ -98,10 +98,13 @@ A k-means clustering analysis was performed on the data based on the literature 
 The machine learning models will be evaluated using numerous metrics to ensure robustness and accuracy. First, confusion matrices will be applied to each model. The confusion matrix generates the metrics giving true positives, false positives, true negatives, and false negatives. This allows for calculations of precision, accuracy, recall, and F1 score. This study is most interested in the metrics of accuracy, detecting a high number of correct predictions, and F1 score, which takes into consideration both precision and recall (Novakovic et al., 2017). F1 score maximizes both of these metrics to create a more thorough picture of the prediction (Novakovic et al., 2017). Therefore, further to this, this study will also focus on the metric of sensitivity rather than specificity. This is because in this case, it is more important to be able to correctly identify when the condition is present (customer did churn). This is preferable to the alternative that the model focuses more on being able to detect when a customer won’t churn, as a company is better off targeting customers who are going to stay already rather than not targeting some customers who are planning to leave. These metrics are in line with the literature previously discussed, of which the majority use these metrics to ensure the best model. The formulas for each of these metrics are as seen below (Ullah et al., 2019).
 
 
-_<p style="text-align: center;"> Accuracy =( True Positives+True Negatives)/(Total Observations) </p>_
-_<p align="center"> Precision = (True Positives)/(True Positives+False Positives) </p>_
-_<p align="center"> Recall/Sensitivity = (True Positives)/(True Positives+False Negatives) </p>_
-_<p align="center"> F1 Score = 2×((Precision×Recall)/(Precision+Recall)) </p>_
+**_Accuracy =( True Positives+True Negatives)/(Total Observations)_**
+
+**_Precision = (True Positives)/(True Positives+False Positives)_**
+
+**_Recall/Sensitivity = (True Positives)/(True Positives+False Negatives)_**
+
+**_F1 Score = 2×((Precision×Recall)/(Precision+Recall))_**
 
 
 Other metrics will also be considered .Two of these metrics are Receiver Operating Characteristic (ROC) and Area Under the Curve (AUC). The ROC curve serves the purpose of summarizing all of the confusion matrices which were produced and aims to reach the false positive rate as fast as possible (Zheng, 2015). The AUC curve builds upon the ROC curve as it allows for ROC’s to be compared to one another, the larger the AUC curve the stronger the model (Zheng, 2015). Additionally, the metric akaike information criterion (AIC) will be applied to logistic regression models for evaluation. This metric does not provide useful information for any other model, as it was only used for logistic regression, to explore which model is the best fit (Dean, 2014). 
