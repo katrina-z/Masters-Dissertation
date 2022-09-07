@@ -136,6 +136,7 @@ churn_pred1    0    1
 ```
 
 <sub> Table 2: Logistic regression metrics </sub>
+
 | Model  |	AIC  |	Accuracy |	Sensitivity |	F1 Score |	AUC |
 | ---- | ----  | ---- | --- | ---- |--- |
 | Logistic Regression Model 1 |	4744.8 |	0.8367 |	0.6765 |	0.7614 |	0.9599 |
@@ -165,8 +166,9 @@ churn_dt_boost100 <- C5.0(churn_dt_train[-16], churn_dt_train$churn_risk_score, 
 ```
 
 <sub> Table 3: Decision tree metrics </sub>
- | Model |	Accuracy |	Sensitivity |	F1 Score |	AUC |
- | ---- | ----- | ----- | ---- | ----- |
+
+| Model |	Accuracy |	Sensitivity |	F1 Score |	AUC |
+| ---- | ----- | ----- | ---- | ----- |
 |Decision Tree Model 1 |	0.9408 |	0.9207 |   	0.8970 |	0.9782 |
 |Decision Tree Model 2 |	0.9388 |	0.9018 |	0.8949 |	0.9786 |
 |Decision Tree Model 3 |	0.9396 |	0.9198 |	0.8949 |	0.9782 |
@@ -225,6 +227,7 @@ bst <- boosting.cv(churn_risk_score ~ ., data = churn_rf_rand, mfinal = 50)
 ```
 
 <sub> Table 4: AdaBoost metrics </sub>
+
 | Model  |	Accuracy |	Sensitivity |	F1 Score |	AUC |	Error |
 | ---- | ---- | ---- | ---- | --- | ---- |
 | AdaBoost Model 1 |	0.9407 |	0.9619 |	0.8967 |	N/A |	0.0593 |
@@ -265,6 +268,7 @@ rf2 <- train(churn_risk_score ~ ., data = churn_rf_trn, method = "rf",
 
 
 <sub> Table 5: Random forest metrics </sub>
+
 | Model  |	Accuracy |	Sensitivity |	F1 Score |	AUC |
 | ------  | -----  | ------ | ----- | ----- |
 | Random Forest Model 1 |	0.9396  | 	0.9180 |	0.8950 |	0.9763 |
@@ -324,6 +328,7 @@ svm1 <- ksvm(churn_risk_score ~ ., data = churn4.tr, kernel = "rbfdot", type = "
 ```
 
 <sub> Table 6: SVM metrics </sub>
+
 | Model |	Accuracy |	Sensitivity |	F1 Score |	AUC |
 | ----- | -----  | ---- | ----- | ---- |
 | SVM Model 1 |	79.7 |	0.7605 |	0.6669 |	0.8952 |
@@ -391,6 +396,7 @@ The decision tree models and random forests are extremely similar, with their ac
 Ultimately, one must be cautious as this study was limited by many factors. The company did not provide a lot of excess information other than the data set, thus it is possible that some of the variables should have been treated differently or had a different meaning. Additionally, information could have been lost in the encoding stage of this study as the relationship between the ordered variables may have been misrepresented. Finally, due to computational demands, the data set had to be paired down, this could have resulted in a loss of information or a sampling bias. Future work can investigate the use of multiple methods added together as this may reduce possibility of bias and make up for the data lost during data preparation.
 
 <sub> Table 7: Metric comparison between algorithms </sub>
+
 | Model |	Accuracy |	Sensitivity |	F1 Score |	AUC |
 | ----- | -----  | ---- | ----- | ----- |
 | Logistic Regression Model 1 |	0.8367 |	0.6765 |	0.7614 |	0.9599 |
